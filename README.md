@@ -1,2 +1,0 @@
-# badbank
-Bad Bank HW
