@@ -1,0 +1,25 @@
+{
+  "accounts": [
+    {
+      "name": "Abhishek",
+      "email": "ab@gmail.com",
+      "balance": 0,
+      "password": "abc",
+      "transactions": []
+    },
+    {
+      "name": "ab",
+      "email": "ab",
+      "balance": 0,
+      "password": "ab",
+      "transactions": []
+    },
+    {
+      "name": "ab",
+      "email": "ab",
+      "balance": 0,
+      "password": "ab",
+      "transactions": []
+    }
+  ]
+}
