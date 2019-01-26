@@ -9,9 +9,7 @@ app.use(express.static('public'));
 
 // start server
 // -----------------------
-app.listen(3001, function(){
-    console.log('Running on port 3001');
-});
+app.listen();
 
 // allow Cross-Origin Resource Sharing (CORS)
 var cors = require('cors');
@@ -71,34 +69,117 @@ app.get('/account/login/:email/:password', function (req, res) {
     // If fail, return null
 });
 
+app.get('/account/deposit/:email/:amt', function (req, res) {
+
+    // YOUR CODE
+    // Login user - confirm credentials
+    var useremail = req.params.email;
+    var amt = req.params.amt;
+    var dt = new Date();
+    var userfound = db.get('accounts').find({email:useremail}).value();
+    if (userfound == null){
+        res.send(null);  
+    }
+    else {
+        
+        var currentbalance = userfound.balance;
+        newbalance = Number(currentbalance) + Number(amt);
+        //console.log(amt);
+        //console.log(newbalance);
+         var txn = {activity : "deposit", activityamount: Number(amt), updatedbalance: Number(newbalance), Date: dt.toDateString()};
+        var record = db.get('accounts').find({email:useremail}).value().transactions;
+       record.push(txn);      
+       db.get('accounts').find({email:useremail})
+       .assign({balance : newbalance})
+       .write();
+        res.send(record);    
+    }
+    
+
+    // If success, return account object    
+    // If fail, return null
+});
+
 app.get('/account/get/:email', function (req, res) {
 
     // YOUR CODE
     // Return account based on email
+    var useremail = req.params.email;
+    var amt = req.params.amt;
+    var userfound = db.get('accounts').find({email:useremail}).value();
+    if (userfound == null){
+        res.set('balance',0);
+        res.send(null); 
+    }
+    else {
+        var depositamt = userfound.balance;
+        res.set('balance',depositamt);
+        res.send(userfound);    
+    }
 });
 
-app.get('/account/deposit/:email/:amount', function (req, res) {
 
-    // YOUR CODE
-    // Deposit amount for email
-    // return success or failure string
-});
 
-app.get('/account/withdraw/:email/:amount', function (req, res) {
+app.get('/account/withdraw/:email/:amt', function (req, res) {
 
     // YOUR CODE
     // Withdraw amount for email
     // return success or failure string
+    var useremail = req.params.email;
+    var amt = req.params.amt;
+     var dt = new Date();
+    var userfound = db.get('accounts').find({email:useremail}).value();
+    if (userfound == null){
+         
+        res.set('result',0);
+        res.send(null); 
+    }
+    else if (amt > userfound.balance){
+        res.set('result',1);
+        res.send(userfound); 
+    }
+    else {
+         var currentbalance = userfound.balance;
+        newbalance = Number(currentbalance) - Number(amt);
+        //console.log(amt);
+        //console.log(newbalance);
+         var txn = {activity : "withdraw", activityamount: Number(amt), updatedbalance: Number(newbalance), Date: dt.toDateString()};
+        var record = db.get('accounts').find({email:useremail}).value().transactions;
+       record.push(txn);  
+       db.get('accounts').find({email:useremail})
+       .assign({balance : newbalance})
+       .write();
+        res.set('result',2);
+        res.send(userfound);    
+    }
 });
 
 app.get('/account/transactions/:email', function (req, res) {
 
     // YOUR CODE
     // Return all transactions for account
+     var useremail = req.params.email;
+    var amt = req.params.amt;
+    var userfound = db.get('accounts').find({email:useremail}).value();
+    if (userfound == null){
+        res.send(null); 
+    }
+    else {
+        res.send(userfound.transactions);    
+    }
 });
 
-app.get('/account/all', function (req, res) {
+app.get('/account/all/:email', function (req, res) {
 
     // YOUR CODE
     // Return data for all accounts
+         var useremail = req.params.email;
+    var amt = req.params.amt;
+    var userfound = db.get('accounts').find({email:useremail}).value();
+    if (userfound == null){
+        res.send(null); 
+    }
+    else {
+        res.send(userfound);    
+    }
 });

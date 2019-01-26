@@ -1,25 +1,50 @@
 {
   "accounts": [
     {
-      "name": "Abhishek",
-      "email": "ab@gmail.com",
-      "balance": 0,
-      "password": "abc",
-      "transactions": []
-    },
-    {
       "name": "ab",
       "email": "ab",
-      "balance": 0,
+      "balance": 500,
       "password": "ab",
-      "transactions": []
+      "transactions": [
+        {
+          "activity": "deposit",
+          "activityamount": 100,
+          "updatedbalance": 100,
+          "Date": "Fri Jan 25 2019"
+        },
+        {
+          "activity": "deposit",
+          "activityamount": 200,
+          "updatedbalance": 300,
+          "Date": "Fri Jan 25 2019"
+        },
+        {
+          "activity": "deposit",
+          "activityamount": 300,
+          "updatedbalance": 600,
+          "Date": "Fri Jan 25 2019"
+        },
+        {
+          "activity": "withdraw",
+          "activityamount": 100,
+          "updatedbalance": 500,
+          "Date": "Fri Jan 25 2019"
+        }
+      ]
     },
     {
-      "name": "ab",
-      "email": "ab",
-      "balance": 0,
-      "password": "ab",
-      "transactions": []
+      "name": "rt",
+      "email": "rt",
+      "balance": 2000,
+      "password": "rt",
+      "transactions": [
+        {
+          "activity": "deposit",
+          "activityamount": 2000,
+          "updatedbalance": 2000,
+          "Date": "Fri Jan 25 2019"
+        }
+      ]
     }
   ]
 }
